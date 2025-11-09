@@ -48,22 +48,41 @@ public class PhoneBook {
     }
 
     public Boolean hasEntry(String name) {
-        return null;
+        return this.phonebook.containsKey(name);                  // checking if name exists 
     }
 
-    public List<String> lookup(String name) {
-        return null;
+        public boolean hasEntry(String name, String phoneNumber) { // checking if name has assigned phonenumber
+            List<String> numbers = lookup(name);                   // get list of numbers for name
+            if (numbers == null) {                                 
+                return false;                                      // if it doesn't exist - return false
+            }
+            return numbers.contains(phoneNumber);                  // check if the list contains number
+        }
+
+    public List<String> lookup(String name) {                      // looks for name in phonebook
+        if (this.phonebook.containsKey(name)) {                    // if it contains name
+            return this.phonebook.get(name);                       // return list of numbers with name
+        } else {
+            return null;                                           // otherwise return nothing
+        }
     }
 
-    public String reverseLookup(String phoneNumber)  {
-        return null;
+    public String reverseLookup(String phoneNumber)  {       
+        for (Map.Entry<String, List<String>> entry : phonebook.entrySet()) {  // loops through entries in phonebook    
+            String name = entry.getKey();                           // takes the name
+            List<String> numbers = entry.getValue();                // takes the list of numbers
+            if (numbers.contains(phoneNumber)) {                    // checks if person has the number
+                return name;                                        // if it does, return name
+            }
+        }
+        return null;                                                // if not, return nothing
     }
 
     public List<String> getAllContactNames() {
-        return null;
+        return new ArrayList<>(phonebook.keySet());                 // creates a new array list and returns names in phonebook inside array list  
     }
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return this.phonebook;                                      // returns phonebook map
     }
 }
